@@ -3,6 +3,7 @@ from azure.servicebus import ServiceBusService
 import tweepy
 from tweepy import OAuthHandler
 import json
+from time import sleep
 
 
 servns = 'Miage2016' # service_bus _namespace
@@ -17,16 +18,21 @@ access_secret = '3i271smaOXbpDJ33mSzql90uHQXXe3POnPIWxkq3zirML'
 consumer_key = 'njSeydg32gT3ezDvCNrn584CB'
 consumer_secret = 'S2uj20xoQXW3Ae35MGRMgPmuv2KgNwlFjrhXLgpHIKKUthrclM'
 
-keywords = "Azure,Skype,XBox,Microsoft,Seattle"
+query = 'avion'
+max_tweets = 40
 
 auth = OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_secret)
  
 api = tweepy.API(auth)
 
-from time import sleep
-for tweet in tweepy.Cursor(api.statuses_lookup(keywords)).items():
-    sbs.send_event('iot', json.dumps(tweet))
-    sleep(1)
+# sbs.send_event('iot', json.dumps(tweepy.Cursor(api.statuses_lookup, id='azure')))
+
+searched_tweets = [status._json for status in tweepy.Cursor(api.search,  q=query).items(max_tweets)]
+sbs.send_event('iot', searched_tweets)
+
+# for result in tweepy.Cursor(api.search, q=query).items():
+#     sbs.send_event('iot', result)
+#     sleep(1)
 
 print("Finished")
