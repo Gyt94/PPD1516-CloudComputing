@@ -33,7 +33,8 @@ auth.set_access_token(access_token, access_secret)
  
 api = tweepy.API(auth)
 
-searched_tweets = [status._json for status in tweepy.Cursor(api.search,  q=query).items(max_tweets)]
+searched_tweets = [status._json for status in tweepy.Cursor(api.search, q=query).items(max_tweets)]
+searched_tweets = json.dumps(searched_tweets)
 sbs.send_event('iot', searched_tweets)
 
 # for result in tweepy.Cursor(api.search, q=query).items():
