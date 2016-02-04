@@ -20,25 +20,40 @@ consumer_key = 'njSeydg32gT3ezDvCNrn584CB'
 consumer_secret = 'S2uj20xoQXW3Ae35MGRMgPmuv2KgNwlFjrhXLgpHIKKUthrclM'
 
 query = ''
-max_tweets = 40
-
+max_tweets = 20
+tweet_id = 1000
 #Fin Variables de configuration
 
 #Code 
 
-query = sys.argv[1]
+# query = sys.argv[1]
 
 auth = OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_secret)
  
 api = tweepy.API(auth)
 
-searched_tweets = [status._json for status in tweepy.Cursor(api.search, q=query).items(max_tweets)]
-searched_tweets = json.dumps(searched_tweets)
-sbs.send_event('iot', searched_tweets)
+# print(type(tweepy.Cursor(api.home_timeline))
+	
+while True:
+	i = 0
+	for status in tweepy.Cursor(api.home_timeline, since_id = tweet_id).items(max_tweets):
+		if i == 0:
+			last_tweet_id = status.id
+		searched_tweets = status._json
+		sbs.send_event('iot', searched_tweets)
+		print("tweet : " + str(status.id))
+		i = i + 1
+
+	tweet_id = last_tweet_id
+	print('dodo' + ' id : ' + str(last_tweet_id))
+	sleep(10)
+
+
+# searched_tweets = [status._json for status in tweepy.Cursor(api.home_timeline).items(max_tweets)]
+# searched_tweets = json.dumps(searched_tweets)
+# sbs.send_event('iot', searched_tweets)
 
 # for result in tweepy.Cursor(api.search, q=query).items():
 #     sbs.send_event('iot', result)
 #     sleep(1)
-
-print("Finished")
