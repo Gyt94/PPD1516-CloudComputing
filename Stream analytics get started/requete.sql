@@ -1,0 +1,1 @@
+SELECT * FROM CallStream WHERE text LIKE('%virus%')

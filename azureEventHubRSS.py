@@ -1,6 +1,6 @@
 
 from azure.servicebus import ServiceBusService
-import json
+import json,codecs
 import feedparser
 import time
 
@@ -15,26 +15,31 @@ temps=time.time()
 chars_to_remove = ['\'']
 europe = feedparser.parse('http://www.europe1.fr/var/export/rss/europe1/actus.xml')
 dernE = europe.entries[0]
-jason = "{'source':'europe1',\'title\':\'"+dernE.title.replace('\'','')+"\','text':'"+dernE.description.replace('\'','')+"'}"
-
+jason = "{'source':'europe1',\'title\':\'"+unicode(dernE.title)+"\','text':'"+unicode(dernE.description)+"'}"
+#print(unicode(jason))
+sbs.send_event('iot', unicode(jason))
 france24 = feedparser.parse('http://www.france24.com/fr/france/rss')
 dernLM= france24.entries[0]
-jasonLM = "{'source':'france24',\'title\':\'"+dernLM.title.replace('\'','')+"\','text':'"+dernLM.description.replace('\'','')+"'}"
-print jason
-print jasonLM
-
+jasonLM = "{'source':'france24',\'title\':\'"+unicode(dernLM.title)+"\','text':'"+unicode(dernLM.description)+"'}"
+#print(unicode(jasonLM))
+sbs.send_event('iot', unicode(jasonLM))
 while True:
     europe = feedparser.parse('http://www.europe1.fr/var/export/rss/europe1/actus.xml')
     france24 = feedparser.parse('http://www.france24.com/fr/france/rss')
     if dernE != europe.entries[0]:
         dernE = europe.entries[0]
-        jason = "{'source':'europe1',\'title\':\'"+dernE.title.replace('\'','')+"\','text':'"+dernE.description.replace('\'','')+"'}"
-        print jason
+        jason = "{'source':'europe1',\'title\':\'"+unicode(dernE.title)+"\','text':'"+unicode(dernE.description)+"'}"
+        #print(unicode(jason))
+        sbs.send_event('iot', unicode(jason))
     if dernLM != france24.entries[0]:
-	    dernLM = france24.entries[0]
-	    jasonLM = "{'source':'france24',\'title\':\'"+dernLM.title.replace('\'','')+"\','text':'"+dernLM.description.replace('\'','')+"'}"
-	    print jasonLM
-    time.sleep(60)
+        dernLM = france24.entries[0]
+        #jasonLM = "{'source':'france24',\'title\':\'"+dernLM.title.replace('\'','')+"\','text':'"+dernLM.description.replace('\'','')+"'}"
+        jasonLM = "{'source':'france24',\'title\':\'"+unicode(dernLM.title)+"\','text':'"+unicode(dernLM.description)+"'}"
+        #print(unicode(jasonLM))
+        sbs.send_event('iot', unicode(jasonLM))
+    cpt=cpt+1
+    print("boucle")
+    time.sleep(30)
 
 #from time import sleep
 #for e in o :
