@@ -12,16 +12,28 @@ sbs = ServiceBusService(service_namespace=servns,
                         shared_access_key_name=key_name,
                         shared_access_key_value=key_value) # Create a ServiceBus Service Object
 temps=time.time()
-d = feedparser.parse('http://www.europe1.fr/var/export/rss/europe1/actus.xml')
-dernE = d.entries[0]
-jason = "{\'title\':\'"+dernE.title+"\','description':'"+dernE.description+"\'}"
+chars_to_remove = ['\'']
+europe = feedparser.parse('http://www.europe1.fr/var/export/rss/europe1/actus.xml')
+dernE = europe.entries[0]
+jason = "{'source':'europe1',\'title\':\'"+dernE.title.replace('\'','')+"\','text':'"+dernE.description.replace('\'','')+"'}"
+
+france24 = feedparser.parse('http://www.france24.com/fr/france/rss')
+dernLM= france24.entries[0]
+jasonLM = "{'source':'france24',\'title\':\'"+dernLM.title.replace('\'','')+"\','text':'"+dernLM.description.replace('\'','')+"'}"
 print jason
+print jasonLM
+
 while True:
-    d = feedparser.parse('http://www.europe1.fr/var/export/rss/europe1/actus.xml')
-    if dernE != d.entries[0]:
-        dernE = d.entries[0]
-        jason = "{\'title\':\'"+dernE.title+"\','description':'"+dernE.description+"'}"
+    europe = feedparser.parse('http://www.europe1.fr/var/export/rss/europe1/actus.xml')
+    france24 = feedparser.parse('http://www.france24.com/fr/france/rss')
+    if dernE != europe.entries[0]:
+        dernE = europe.entries[0]
+        jason = "{'source':'europe1',\'title\':\'"+dernE.title.replace('\'','')+"\','text':'"+dernE.description.replace('\'','')+"'}"
         print jason
+    if dernLM != france24.entries[0]:
+	    dernLM = france24.entries[0]
+	    jasonLM = "{'source':'france24',\'title\':\'"+dernLM.title.replace('\'','')+"\','text':'"+dernLM.description.replace('\'','')+"'}"
+	    print jasonLM
     time.sleep(60)
 
 #from time import sleep
