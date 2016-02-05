@@ -3,14 +3,13 @@ from azure.servicebus import ServiceBusService
 import json,codecs
 import feedparser
 import time
+import config
 
-servns = 'Miage2016' # service_bus _namespace
-key_name = 'manage'  # SharedAccessKeyName from Azure portal
-key_value = 'KEOU/Qun1wrPFO8eLXM4HCEa59WDP2qLcuuhNapYEjQ='  # SharedAccessKey from Azure portal
+
 cpt = 0
-sbs = ServiceBusService(service_namespace=servns,
-                        shared_access_key_name=key_name,
-                        shared_access_key_value=key_value) # Create a ServiceBus Service Object
+sbs = ServiceBusService(service_namespace=config.servns,
+                        shared_access_key_name=config.key_name,
+                        shared_access_key_value=config.key_value) # Create a ServiceBus Service Object
 temps=time.time()
 chars_to_remove = ['\'']
 europe = feedparser.parse('http://www.europe1.fr/var/export/rss/europe1/actus.xml')
