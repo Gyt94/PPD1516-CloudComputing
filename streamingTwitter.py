@@ -23,14 +23,15 @@ class StdOutListener(tweepy.StreamListener):
         # return True
 
 		sbs = ServiceBusService(service_namespace=config.servns, shared_access_key_name=config.key_name, shared_access_key_value=config.key_value)
-		searched_tweets = "{ 'source': '" + unicode(decoded['user']['screen_name']) + "' , 'text': '" + unicode(decoded['text']) + "' }"
+		searched_tweets = "{ 'source': '" + unicode(decoded['user']['screen_name']) + "' , 'text': '" + unicode(decoded['text'].encode('ascii', 'ignore')) + "' }"
 		print(unicode(searched_tweets))
 		sbs.send_event('iot', unicode(searched_tweets))
 
 		return True
 
     def on_error(self, status):
-        print status
+		print status
+		return False
 
 if __name__ == '__main__':
 
