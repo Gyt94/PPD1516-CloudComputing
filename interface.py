@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from Tkinter import *
+from PIL import Image, ImageTk
 
 class App:
 
@@ -9,7 +10,7 @@ class App:
 
         frame = Frame(master, height=768, width=576, cursor="hand2")
         frame.pack()
-        img = PhotoImage(file="Logo-Paris-Descartes.gif")
+        img = ImageTk.PhotoImage(file="Logo_cloud.png")
         lab=Label(frame, image=img)
         lab.photo = img
         lab.pack(side=TOP)
