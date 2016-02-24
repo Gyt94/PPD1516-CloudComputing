@@ -1,0 +1,17 @@
+Traceback (most recent call last):
+  File "interface.py", line 30, in <module>
+  File "interface.py", line 13, in __init__
+  File "PIL\ImageTk.pyc", line 85, in __init__
+  File "PIL\Image.pyc", line 1952, in open
+IOError: [Errno 2] No such file or directory: 'Logo_cloud.png'
+Exception AttributeError: "PhotoImage instance has no attribute '_PhotoImage__photo'" in <bound method PhotoImage.__del__ of <PIL.ImageTk.PhotoImage instance at 0x02240A30>> ignored
+Traceback (most recent call last):
+  File "interface.py", line 28, in <module>
+  File "Tkinter.pyc", line 1810, in __init__
+_tkinter.TclError: Can't find a usable init.tcl in the following directories: 
+    C:/Users/Guillaume/Documents/GitHub/PPD1516-CloudComputing/lib/tcl8.5 C:/Users/Guillaume/Documents/GitHub/PPD1516-CloudComputing/lib/tcl8.5 C:/Users/Guillaume/Documents/GitHub/lib/tcl8.5 C:/Users/Guillaume/Documents/GitHub/PPD1516-CloudComputing/library C:/Users/Guillaume/Documents/GitHub/library C:/Users/Guillaume/Documents/GitHub/tcl8.5.15/library C:/Users/Guillaume/Documents/tcl8.5.15/library
+
+
+
+This probably means that Tcl wasn't installed properly.
+
