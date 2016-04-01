@@ -28,7 +28,7 @@ class App:
 
     def twit(self):
         mot = "explosion"
-        streamingTwitter.main("q",mot)
+        streamingTwitter.main(["-q",mot])
         print "twit is launch"
     def rss(self):
         execfile("azureEventHubRSS.py")
