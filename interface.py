@@ -3,14 +3,15 @@
 
 from Tkinter import *
 from PIL import Image, ImageTk
+import streamingTwitter
 
 class App:
 
     def __init__(self, master):
 
-        frame = Frame(master, height=768, width=576, cursor="hand2")
+        frame = Frame(master, height=1024, width=700, cursor="hand2")
         frame.pack()
-        img = ImageTk.PhotoImage(file="Logo_cloud.png")
+        img = ImageTk.PhotoImage(file="Untitled.png")
         lab=Label(frame, image=img)
         lab.photo = img
         lab.pack(side=TOP)
@@ -19,14 +20,22 @@ class App:
             )
         self.button.pack(side=LEFT)
 
-        self.hi_there = Button(frame, text="Hello", command=self.say_hi)
-        self.hi_there.pack(side=LEFT)
+        self.Rss_btn = Button(frame, text="RSS", command=self.rss)
+        self.Rss_btn.pack(side=LEFT)
+        self.Twit_btn = Button(frame, text="Touiteur", command=self.twit)
+        self.Twit_btn.pack(side=RIGHT)
+		
 
-    def say_hi(self):
-        print "hi there, everyone!"
+    def twit(self):
+        mot = "explosion"
+        streamingTwitter.main("q",mot)
+        print "twit is launch"
+    def rss(self):
+        execfile("azureEventHubRSS.py")
+        print "rss is launch"
 
 root = Tk()
-root.geometry("500x500")
+root.geometry("700x500")
 app = App(root)
 
 root.mainloop()

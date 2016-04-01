@@ -18,7 +18,7 @@ jason = "{'source':'europe1',\'title\':\'"+unicode(dernE.title)+"\','text':'"+un
 #print(unicode(jason))
 sbs.send_event('iot', jason.encode('cp850', errors='replace'))
 france24 = feedparser.parse('http://www.france24.com/fr/france/rss')
-if france24.entries
+#if france24.entries
 dernLM= france24.entries[0]
 jasonLM = "{'source':'france24',\'title\':\'"+unicode(dernLM.title)+"\','text':'"+unicode(dernLM.description)+"'}"
 #print(unicode(jasonLM))
