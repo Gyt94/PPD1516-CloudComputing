@@ -45,7 +45,7 @@ def main(args):
 	auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 	auth.set_access_token(access_token, access_token_secret)
 
-	print "Showing all new tweets for #" + query
+	# print "Showing all new tweets for #" + query
 
     # There are different kinds of streams: public stream, user stream, multi-user streams
     # In this example follow #programming tag
@@ -54,7 +54,9 @@ def main(args):
     
 	stream = tweepy.Stream(auth, l)
 	# stream.userstream
-	stream.filter(track=[query])
+	stream.filter(track=[query], async=True)
+
+	return 0
 
 if __name__ == '__main__':
 
