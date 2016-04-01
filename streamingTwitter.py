@@ -33,11 +33,10 @@ class StdOutListener(tweepy.StreamListener):
 		print status
 		return False
 
-if __name__ == '__main__':
-
+def main(args):
 	query = ""
 
-	opts, args = getopt.getopt(sys.argv[1:],'q:')
+	opts, args = getopt.getopt(args,'q:')
 	for opt, arg in opts:
 		if opt == '-q':
    			query = arg
@@ -56,6 +55,10 @@ if __name__ == '__main__':
 	stream = tweepy.Stream(auth, l)
 	# stream.userstream
 	stream.filter(track=[query])
+
+if __name__ == '__main__':
+
+	sys.exit(main(sys.argv[1:]))
 
 
 
